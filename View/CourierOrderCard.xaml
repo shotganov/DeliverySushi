@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="DeliverySushi.View.CourierOrderCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DeliverySushi.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="800">
+
+        <Grid Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Заголовок заказа -->
+                
+                <RowDefinition Height="Auto"/>
+                <!-- Итоговая сумма -->
+
+                <RowDefinition Height="Auto"/>
+                <!-- Изображения товаров -->
+
+                <RowDefinition Height="*"/>
+                <!-- Список товаров -->
+
+                <RowDefinition Height="Auto"/>
+                
+            </Grid.RowDefinitions>
+            
+
+            <!-- Заголовок заказа -->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                
+                <TextBlock FontSize="18" FontWeight="Bold" Margin="0,0,5,0">
+                <Run Text="Заказ"/>
+                </TextBlock>
+                
+                <TextBlock FontSize="18" Margin="0,0,5,0">
+                <Run Text=" от "/>
+                <Run Text="{Binding order_date, StringFormat='dd.MM.yyyy HH:mm'}"/>
+                </TextBlock>
+
+                <TextBlock FontSize="18" FontWeight="Bold" Foreground="Gray">
+                <Run Text="Статус: "/>
+                <Run Text="{Binding status}"/>
+                </TextBlock>
+
+            </StackPanel>
+            
+            <TextBlock Grid.Row="1" FontSize="14" FontWeight="Bold" Margin="0,0,5,0">
+              <Run Text="Итоговая цена: "/>
+              <Run Text="{Binding total_price}"/>
+              <Run Text=" ₽"/>
+            </TextBlock>
+            
+            <!-- Галерея изображений -->
+            <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,10,0,10">
+                <ItemsControl ItemsSource="{Binding Order_Item}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="8" Padding="5" Margin="0,0,5,0">
+                                <Image Source="{Binding ImageSource}" Width="80" Height="80" Stretch="UniformToFill"/>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <!-- Список товаров -->
+            <StackPanel Grid.Row="3" Margin="0,0,0,10">
+                <TextBlock Text="Товары:" FontSize="14" FontWeight="Bold" Margin="0,0,0,5"/>
+                <ItemsControl ItemsSource="{Binding Order_Item}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                <TextBlock Text="{Binding name}" FontSize="12" Width="200"/>
+                                <TextBlock FontSize="12">
+                                <Run Text="{Binding quantity}"/>
+                                <Run Text=" шт. Цена: "/>
+                                <Run Text="{Binding price}"/>
+                                <Run Text="₽"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+            <Button  BorderThickness="0" HorizontalAlignment="Right" x:Name="AcceptButton" Content="{Binding DataContext.ButtonContent, RelativeSource={RelativeSource AncestorType=Page}}"  Grid.Row="4" Grid.Column="0" Width="150" Height="30" Margin="0,10,20,10"
+                        Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                        CommandParameter="{Binding}" Click="AcceptButton_Click" 
+                        Visibility="{Binding DataContext.StatusDeliveryButtonVisible, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        />
+
+                                <!-- Кнопка "Доставлен" -->
+            <Button  BorderThickness="0" Background="#4B4B9E"  HorizontalAlignment="Right" x:Name="EndDeliveryButton" Content="Доставлен" Grid.Row="4" Grid.Column="1" Width="150" Height="30" Margin="0,10,0,10"
+                        Command="{Binding DataContext.ConfirmDeliverOrderCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                        CommandParameter="{Binding}" 
+                        Visibility="{Binding DataContext.ConfirmDeliveryButtonVisible, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            </Grid>
+          
+
+        </Grid>
+
+</UserControl>

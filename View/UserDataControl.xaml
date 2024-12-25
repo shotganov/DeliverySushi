@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="DeliverySushi.View.UserDataControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DeliverySushi.View"
+             mc:Ignorable="d" 
+             Loaded="UserControl_Loaded"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid Background="White">
+        <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="10" Padding="20" Margin="20">
+            <StackPanel>
+                <TextBlock Text="Данные пользователя" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Phone -->
+                    <Label Content="Телефон:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontSize="16"/>
+                    <TextBox Text="{Binding User.phone}" 
+                             Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" FontSize="16" Margin="10,0,0,0"/>
+
+                    <Label Content="Адрес:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" FontSize="16"/>
+                    <TextBox Text="{Binding User.adress}" 
+          Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" FontSize="16" Margin="10,0,0,0"/>
+
+                    <!-- Login -->
+                    <Label Content="Логин:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" FontSize="16"/>
+                    <TextBox Text="{Binding User.login}" 
+                             Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" FontSize="16" Margin="10,0,0,0"/>
+
+                    <!-- Email -->
+                    <Label Content="Email:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" FontSize="16"/>
+                    <TextBox Text="{Binding User.email}" 
+                             Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" FontSize="16" Margin="10,0,0,0"/>
+
+                    <!-- Password -->
+                    <Label Content="Пароль:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" FontSize="16"/>
+                    <PasswordBox x:Name="PasswordBox" 
+                         Grid.Row="4" Grid.Column="1" 
+                         VerticalAlignment="Center" FontSize="16" Margin="10,0,0,0"
+                         PasswordChanged="PasswordBox_PasswordChanged"
+                         Tag="{Binding User.password}"/>
+                </Grid>
+
+                <!-- Save Button -->
+                <Button Background="#4B4B9E" BorderThickness="0" Content="Сохранить" HorizontalAlignment="Center" Margin="0,20,0,0" Padding="10,5"
+                        Command="{Binding SaveCommand}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
